@@ -89,11 +89,6 @@ abstract class AbstractRectorTestCase extends AbstractKernelTestCase
     private static $runnableRectorFactory;
 
     /**
-     * @var bool
-     */
-    private $autoloadTestFixture = true;
-
-    /**
      * @var RectorConfigsResolver
      */
     private static $rectorConfigsResolver;
@@ -155,13 +150,6 @@ abstract class AbstractRectorTestCase extends AbstractKernelTestCase
         return StaticFixtureFinder::yieldDirectory($directory, $suffix);
     }
 
-    protected function doTestFileInfoWithoutAutoload(SmartFileInfo $fileInfo): void
-    {
-        $this->autoloadTestFixture = false;
-        $this->doTestFileInfo($fileInfo);
-        $this->autoloadTestFixture = true;
-    }
-
     /**
      * @param SmartFileInfo[] $extraFileInfos
      */
@@ -171,7 +159,7 @@ abstract class AbstractRectorTestCase extends AbstractKernelTestCase
 
         $inputFileInfoAndExpectedFileInfo = StaticFixtureSplitter::splitFileInfoToLocalInputAndExpectedFileInfos(
             $fixtureFileInfo,
-            $this->autoloadTestFixture
+            false
         );
 
         $inputFileInfo = $inputFileInfoAndExpectedFileInfo->getInputFileInfo();
